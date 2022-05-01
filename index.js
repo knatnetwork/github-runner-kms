@@ -4,6 +4,13 @@ const axios = require('axios');
 const org_pat_map = require('./config.json')
 const port = 3000
 
+const env_list = process.env
+for(var i in env_list) {
+    if(i.includes('PAT_')){
+        org_pat_map[i.replace('PAT_', '')] = env_list[i]
+    }
+}
+
 app.get('/repo/:github_repo_owner/:github_repo_name/registration-token', (req, res) => {
     const registration_token_url= `https://api.github.com/repos/${req.params.github_repo_owner}/${req.params.github_repo_name}/actions/runners/registration-token`
     const github_pat = org_pat_map[`${req.params.github_repo_owner}`]
