@@ -6,8 +6,11 @@ const port = 3000
 
 const env_list = process.env
 for(var i in env_list) {
-    if(i.includes('PAT_')){
-        org_pat_map[i.replace('PAT_', '')] = env_list[i]
+    if(i.startsWith('PAT_')){
+        const pat_label = i.replace('PAT_', '')
+        if (pat_label) {
+            org_pat_map[pat_label] = env_list[i].trim()
+        }
     }
 }
 
